@@ -2,7 +2,10 @@
 #include<iostream>
 #include<windows.h>
 #include<conio.h>
+#include "date.h"
 #include <mylib.h>
+//#include "danhmucsach.h"
+//#include "muontra.h"
 #define MAXLIST 1000
 const int ENTER =13;
 const int SPACE=32;
@@ -15,29 +18,29 @@ const int Down = 80;
 
 using namespace std;
 
-
-//Khai bao danh sach lien ket don danh muc sach
+enum TrangThai
+{
+	ChoMuonDuoc,
+	DaDuocMuon,
+	DaThanhLy,
+};
+//dsach lien ket don
 struct DanhMucSach
 {
-	string maSach;
-	int trangThai;
-	string viTri;
+	string MASACH;
+	TrangThai trangthai;
+	string ViTri;
 };
-struct Node
+
+
+struct node_danhmucsach	//1 phan tu trong dsach
 {
 	DanhMucSach dms;
-	Node *pnext;
+	struct node_danhmucsach *next;
 };
-typedef struct Node *PTRDMS;
-struct listDMS
-{
-	PTRDMS First;
-	PTRDMS Last;
-};
-typedef struct listDMS *LISTDMS;
+typedef node_danhmucsach* NODEPTR;		//dinh nghia node* thanh NODEPTR - doi ten
 
 //Khai bao danh sach tuyen tinh mang con tro dau sach
-
 struct DauSach
 {
 	char ISBN[6];
@@ -46,44 +49,36 @@ struct DauSach
 	string tacGia;
 	string namXuatBan;
 	string theLoai;
-	listDMS firstDMS;
+	NODEPTR ptr_dms;
 };
+
 struct list
 {
 	int n;
 	DauSach *nodes[MAXLIST];
 };
 
-
-//Khai bao cau truc ngay
-struct Date
+//dsach lien ket kep cua MuonTra
+enum TrangThai_MuonTra
 {
-	int Ngay;
-	int Thang;
-	int Nam;
+	ChuaTra,
+	DaTra,
+	MatSach,
 };
-
-//Khai bao danh sach lien ket kep muon tra
 struct MuonTra
 {
 	string MASACH;
-	Date NgayMuon;
-	Date NgayTra;
-	int TrangThai;
-};
-struct node
-{
-	MuonTra data;
-	node *left, *right;
-};
-typedef struct node *NODEPTR;
+	date NgayMuon;
+	date NgayTra;
+	TrangThai_MuonTra trangthaimuontra;
 
-struct listMT
-{
-	NODEPTR Head;
-	NODEPTR Tail;
 };
-
+struct node_muontra		//dinh nghia mot nut
+{
+	MuonTra ChiTietMuonTra;		//chi tiet muon tra co kieu du lieu MuonTra da duoc dinh nghia
+	node_muontra *left,*right;		//2 con tro trai phai
+};
+typedef struct node_muontra* DanhSachMuonTra;
 
 //Khai bao cay nhi phan tim kiem the doc gia
 struct DocGia
@@ -93,8 +88,8 @@ struct DocGia
 	string Ten;
 	string Phai;
 	int TrangThaiThe;
-	listMT firstMT;
 	
+	DanhSachMuonTra dsmuontra_first;
 };
 struct NodeDG
 {

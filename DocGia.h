@@ -1,5 +1,7 @@
 #pragma once
 #include "config.h"
+#include "muontra.h"
+#include "date.h"
 #include <string>
 #include<cstdio>
 #include <iomanip>

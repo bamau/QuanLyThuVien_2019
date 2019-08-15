@@ -2,7 +2,17 @@
 #include "config.h"
 #include "DauSach.h"
 #include "DocGia.h"
+#include "danhmucsach.h"
+#include "muontra.h"
 #include <windows.h>
+#include "mylib.h"
+void resizeConsole(int width, int height)
+{
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r);
+	MoveWindow(console, r.left, r.top, width, height, TRUE);
+}
 
 using namespace std;
 int main() {
@@ -50,7 +60,7 @@ int main() {
 									break;
 								}
 							case 2:
-								{
+									{
 									Normal();
 									system("cls");
 									fflush(stdin);
